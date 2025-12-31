@@ -78,35 +78,37 @@ const AnimeAll = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {animeList.map((anime) => (
             <div key={anime.id} className="group relative">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-gray-900 shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-white/5">
-                <img
-                  src={anime.cover}
-                  alt={anime.judul}
-                  className="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-60"
-                />
-                <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/95 via-black/40 to-transparent">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-0.5 rounded-full bg-indigo-500 text-[10px] font-bold text-white uppercase tracking-wider">
-                      {anime.status || "Ongoing"}
-                    </span>
-                    <span className="text-xs text-yellow-400 flex items-center gap-1 font-bold">
-                      ⭐ {anime.score || "N/A"}
-                    </span>
+              <Link to={`/detail/${encodeURIComponent(anime.url)}`}>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-gray-900 shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-white/5">
+                  <img
+                    src={anime.cover}
+                    alt={anime.judul}
+                    className="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-60"
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/95 via-black/40 to-transparent">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded-full bg-indigo-500 text-[10px] font-bold text-white uppercase tracking-wider">
+                        {anime.status || "Ongoing"}
+                      </span>
+                      <span className="text-xs text-yellow-400 flex items-center gap-1 font-bold">
+                        ⭐ {anime.score || "N/A"}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-bold text-white line-clamp-2 mb-1">
+                      {anime.judul}
+                    </h3>
+                    {anime.lastup && (
+                      <p className="text-[10px] text-gray-400 font-medium">
+                        {anime.lastup}
+                      </p>
+                    )}
                   </div>
-                  <h3 className="text-sm font-bold text-white line-clamp-2 mb-1">
-                    {anime.judul}
-                  </h3>
-                  {anime.lastup && (
-                    <p className="text-[10px] text-gray-400 font-medium">
-                      {anime.lastup}
-                    </p>
-                  )}
                 </div>
-              </div>
+              </Link>
               <div className="mt-3">
                 <Link
                   className="text-sm font-medium text-gray-200 line-clamp-1 group-hover:text-indigo-400 transition-colors"
-                  to={`/detail/${anime.id}`}
+                  to={`/detail/${encodeURIComponent(anime.url)}`}
                 >
                   {anime.judul}
                 </Link>

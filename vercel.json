@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/sansekai-api/:path*",
+      "destination": "https://api.sansekai.my.id/:path*"
+    }
+  ]
+}

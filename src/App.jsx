@@ -6,13 +6,14 @@ import AnimeList from "./components/AnimeList.jsx";
 import AnimeAll from "./components/AnimeAll.jsx";
 import Genre from "./components/Genre.jsx";
 import AnimeDetail from "./components/AnimeDetail.jsx";
+import AnimeVideo from "./components/AnimeVideo.jsx";
 
 function App() {
   const currentYear = new Date().getFullYear();
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-[#0b0f19]">
         <Navbar />
 
         <main className="flex-grow">
@@ -21,16 +22,16 @@ function App() {
               path="/"
               element={
                 <>
-                {/* di gabung */}
                   <Hero />
                   <AnimeList />
                 </>
               }
             />
-            <Route path="/anime" element={<AnimeList />} />
             <Route path="/animeall" element={<AnimeAll />} />
             <Route path="/genre" element={<Genre />} />
-            <Route path="/detail" element={<AnimeDetail />} />
+            <Route path="/genre/:name" element={<Genre />} />
+            <Route path="/detail/:urlId" element={<AnimeDetail />} />
+            <Route path="/video/:chapterUrlId" element={<AnimeVideo />} />
           </Routes>
         </main>
 
