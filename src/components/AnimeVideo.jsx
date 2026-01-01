@@ -48,6 +48,7 @@ const AnimeVideo = () => {
             setSelectedProvider(defaultStream.provide);
           }
         } else {
+          // redirect ke video 2 jika tidak ada
           console.warn("No video data found, redirecting to fallback...");
           navigate(`/video2/${encodeURIComponent(chapterUrlId)}`, {
             replace: true,
@@ -294,8 +295,9 @@ const AnimeVideo = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-indigo-600/5 rounded-2xl border border-indigo-500/20">
-              <div className="flex items-center gap-4 text-white">
+            {/* <div className="p-6 bg-indigo-600/5 rounded-2xl border border-indigo-500/20">
+              {/* fitur like dan dislike */}
+            {/* <div className="flex items-center gap-4 text-white">
                 <div className="flex items-center gap-2">
                   <span className="text-xl">👍</span>
                   <span className="font-bold text-lg">
@@ -308,8 +310,8 @@ const AnimeVideo = () => {
                     {videoData.dislikeCount || 0}
                   </span>
                 </div>
-              </div>
-            </div>
+              </div> 
+            </div> */}
             {/* Kembali ke Detail Anime */}
             <div className="mt-8 flex justify-start">
               <button
