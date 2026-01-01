@@ -125,9 +125,13 @@ export default function Navbar() {
               ref={searchRef}
               className="relative mx-4 flex-1 max-w-xs group hidden sm:block"
             >
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <button
+                onClick={fetchAnime}
+                className="absolute inset-y-0 left-0 flex items-center pl-3 cursor-pointer group/btn active:scale-95 transition-transform"
+                title="Search"
+              >
                 <svg
-                  className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-400 transition-colors"
+                  className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-400 group-hover/btn:text-indigo-400 transition-colors"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -138,19 +142,25 @@ export default function Navbar() {
                     clipRule="evenodd"
                   />
                 </svg>
-              </div>
+              </button>
               <input
                 type="text"
                 id="search"
                 name="search"
                 autoComplete="off"
-                className="block w-full rounded-full border-0 bg-white/5 py-1.5 pl-10 pr-3 text-gray-100 ring-1 ring-inset ring-white/10 placeholder:text-gray-500 focus:bg-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-all duration-300 ease-in-out"
+                className="block w-full rounded-full border-0 bg-white/5 py-1.5 pl-10 pr-12 text-gray-100 ring-1 ring-inset ring-white/10 placeholder:text-gray-500 focus:bg-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-all duration-300 ease-in-out"
                 placeholder="Search anime..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && fetchAnime()}
                 onFocus={() => search && setShowResults(true)}
               />
+              <button
+                onClick={fetchAnime}
+                className="absolute inset-y-1 right-1 px-3 flex items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition-all active:scale-95 text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-indigo-600/20"
+              >
+                Cari
+              </button>
 
               {/* Search Results Dropdown Desktop */}
               {showResults && (
@@ -206,7 +216,11 @@ export default function Navbar() {
         <div className="space-y-1 px-2 pt-2 pb-3">
           <div className="px-3 pb-2">
             <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <button
+                onClick={fetchAnime}
+                className="absolute inset-y-0 left-0 flex items-center pl-3 cursor-pointer active:scale-95 transition-transform"
+                title="Search"
+              >
                 <svg
                   className="h-5 w-5 text-gray-400"
                   viewBox="0 0 20 20"
@@ -219,16 +233,24 @@ export default function Navbar() {
                     clipRule="evenodd"
                   />
                 </svg>
-              </div>
+              </button>
               {/* search anime */}
-              <input
-                type="text"
-                className="block w-full rounded-full border-0 bg-white/5 py-2 pl-10 pr-3 text-gray-100 ring-1 ring-inset ring-white/10 placeholder:text-gray-500 focus:bg-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 text-sm transition-all duration-300"
-                placeholder="Search anime..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && fetchAnime()}
-              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="block w-full rounded-full border-0 bg-white/5 py-2 pl-10 pr-3 text-gray-100 ring-1 ring-inset ring-white/10 placeholder:text-gray-500 focus:bg-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 text-sm transition-all duration-300"
+                  placeholder="Search anime..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && fetchAnime()}
+                />
+                <button
+                  onClick={fetchAnime}
+                  className="px-4 py-2 rounded-full bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition-all active:scale-95"
+                >
+                  Cari
+                </button>
+              </div>
             </div>
             {/* Search Results Mobile */}
             {search && (
