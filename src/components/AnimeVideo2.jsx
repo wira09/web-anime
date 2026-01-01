@@ -19,21 +19,22 @@ const AnimeVideo = () => {
     const fetchVideo = async () => {
       setLoading(true);
       try {
+        // Tambahkan / di akhir jika tidak ada, sesuai pengalaman user di Postman/Curl
+        const formattedId = chapterUrlId.endsWith("/")
+          ? chapterUrlId
+          : `${chapterUrlId}/`;
+
         const response = await fetch(
-          `/sansekai-api/api/anime/getvideo?chapterUrlId=${chapterUrlId}`
+          `/sansekai-api/api/anime/getvideo?chapterUrlId=${encodeURIComponent(
+            formattedId
+          )}`
         );
         const data = await response.json();
-        console.log("Video data received:", data); // Debug log
+        console.log("Video fetching with ID:", formattedId);
+        console.log("Video response:", data);
 
         if (data && data.data && data.data.length > 0) {
           const mainData = data.data[0];
-          console.log("Main video data:", mainData); // Debug log
-
-          // Cek apakah ada data download
-          const hasDownloadData =
-            mainData.download && mainData.download.length > 0;
-          console.log("Has download data:", hasDownloadData); // Debug log
-
           setVideoData(mainData);
 
           // Cari stream 480p pertama sebagai default
@@ -48,10 +49,7 @@ const AnimeVideo = () => {
             setSelectedProvider(defaultStream.provide);
           }
         } else {
-          console.warn("No video data found, redirecting to fallback...");
-          navigate(`/video2/${encodeURIComponent(chapterUrlId)}`, {
-            replace: true,
-          });
+          console.warn("No video data found for:", formattedId);
         }
         setLoading(false);
       } catch (error) {
@@ -176,14 +174,11 @@ const AnimeVideo = () => {
     return (
       <div className="text-center py-20 text-white bg-[#0b0f19] h-screen">
         <h2 className="text-2xl font-bold">Video tidak ditemukan</h2>
-        <p className="text-gray-400 mt-2">
-          Mencoba mengalihkan ke server alternatif...
-        </p>
         <Link
-          to={`/video2/${encodeURIComponent(chapterUrlId)}`}
+          onClick={() => navigate(-1)}
           className="text-indigo-400 mt-4 inline-block hover:underline"
         >
-          Gunakan Server Alternatif
+          Kembali ke Detail Anime
         </Link>
       </div>
     );

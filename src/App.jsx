@@ -7,6 +7,7 @@ import AnimeAll from "./components/AnimeAll.jsx";
 import Genre from "./components/Genre.jsx";
 import AnimeDetail from "./components/AnimeDetail.jsx";
 import AnimeVideo from "./components/AnimeVideo.jsx";
+import AnimeVideo2 from "./components/AnimeVideo2.jsx";
 import Dukungan from "./components/Dukungan.jsx";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/genre/:name" element={<Genre />} />
             <Route path="/detail/:urlId" element={<AnimeDetail />} />
             <Route path="/video/:chapterUrlId" element={<AnimeVideo />} />
+            <Route path="/video2/:chapterUrlId" element={<AnimeVideo2 />} />
           </Routes>
         </main>
 
