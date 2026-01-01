@@ -7,6 +7,7 @@ import AnimeAll from "./components/AnimeAll.jsx";
 import Genre from "./components/Genre.jsx";
 import AnimeDetail from "./components/AnimeDetail.jsx";
 import AnimeVideo from "./components/AnimeVideo.jsx";
+import Dukungan from "./components/Dukungan.jsx";
 
 function App() {
   const currentYear = new Date().getFullYear();
@@ -28,6 +29,7 @@ function App() {
               }
             />
             <Route path="/animeall" element={<AnimeAll />} />
+            <Route path="/dukungan" element={<Dukungan />} />
             <Route path="/genre" element={<Genre />} />
             <Route path="/genre/:name" element={<Genre />} />
             <Route path="/detail/:urlId" element={<AnimeDetail />} />

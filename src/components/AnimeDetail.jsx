@@ -7,6 +7,7 @@ const AnimeDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // menampilkan detail
     const fetchDetail = async () => {
       setLoading(true);
       try {
@@ -23,7 +24,6 @@ const AnimeDetail = () => {
         setLoading(false);
       }
     };
-
     fetchDetail();
   }, [urlId]);
 
@@ -145,7 +145,7 @@ const AnimeDetail = () => {
                       className="flex items-center justify-between p-4 rounded-xl glass border border-white/5 hover:bg-indigo-600/10 hover:border-indigo-500/50 transition-all group"
                     >
                       <div className="flex items-center gap-4">
-                        <span className="w-10 h-10 rounded-lg bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all text-xs">
+                        <span className="w-12 h-10 rounded-lg bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all text-xs">
                           {ep.ch.toLowerCase().includes("movie")
                             ? "MV"
                             : ep.ch.replace(/Episode/i, "").trim()}

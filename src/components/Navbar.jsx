@@ -11,7 +11,7 @@ const navigation = [
   { name: "Home", to: "/", current: true },
   { name: "Daftar Anime", to: "/animeall", current: false },
   { name: "Genre", to: "/genre", current: false },
-  { name: "Completed Anime", to: "/completed", current: false },
+  { name: "Dukungan", to: "/dukungan", current: false },
 ];
 
 function classNames(...classes) {

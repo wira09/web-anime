@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const AnimeVideo = () => {
+  const navigate = useNavigate();
   const { chapterUrlId } = useParams();
   const [videoData, setVideoData] = useState(null);
+  const [animeList, setAnimeList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingLatest, setLoadingLatest] = useState(true);
   const [selectedReso, setSelectedReso] = useState("480p");
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [currentStream, setCurrentStream] = useState(null);
@@ -12,6 +15,7 @@ const AnimeVideo = () => {
   const videoRef = useRef(null);
 
   useEffect(() => {
+    // meampilkan video
     const fetchVideo = async () => {
       setLoading(true);
       try {
@@ -55,6 +59,26 @@ const AnimeVideo = () => {
 
     fetchVideo();
   }, [chapterUrlId]);
+
+  useEffect(() => {
+    const fetchLatest = async () => {
+      setLoadingLatest(true);
+      try {
+        const response = await fetch("/sansekai-api/api/anime/latest?page=1");
+        const data = await response.json();
+        if (data && data.data) {
+          setAnimeList(data.data);
+        } else if (Array.isArray(data)) {
+          setAnimeList(data);
+        }
+      } catch (error) {
+        console.error("Gagal mengambil anime terbaru:", error);
+      } finally {
+        setLoadingLatest(false);
+      }
+    };
+    fetchLatest();
+  }, []);
 
   // Fungsi untuk mencegah download popup
   useEffect(() => {
@@ -280,7 +304,19 @@ const AnimeVideo = () => {
                 </div>
               </div>
             </div>
-          </div>          
+            {/* Kembali ke Detail Anime */}
+            <div className="mt-8 flex justify-start">
+              <button
+                onClick={() => navigate(-1)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-all border border-white/5 text-sm font-medium group"
+              >
+                <span className="group-hover:-translate-x-1 transition-transform">
+                  ←
+                </span>
+                Kembali ke Daftar Episode
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Sidebar */}
@@ -333,18 +369,66 @@ const AnimeVideo = () => {
             </ul>
           </div>
 
-          {/* Episode Navigation (Placeholder)
           <div className="glass p-6 rounded-3xl border border-white/5">
-            <h3 className="text-white font-bold mb-4">Navigasi Episode</h3>
-            <div className="flex justify-between">
-              <button className="px-4 py-2 rounded-lg bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors text-sm">
-                ← Episode Sebelumnya
-              </button>
-              <button className="px-4 py-2 rounded-lg bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600/30 hover:text-indigo-300 transition-colors text-sm">
-                Episode Selanjutnya →
-              </button>
+            <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-5 bg-indigo-500 rounded-full"></span>
+              Anime Terbaru
+            </h3>
+            <div className="space-y-5">
+              {loadingLatest ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="animate-pulse flex gap-3">
+                      <div className="w-16 h-20 bg-white/5 rounded-lg"></div>
+                      <div className="flex-1 space-y-2 py-1">
+                        <div className="h-3 bg-white/5 rounded w-3/4"></div>
+                        <div className="h-2 bg-white/5 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                animeList.slice(0, 5).map((anime) => (
+                  <Link
+                    key={anime.id || anime.url}
+                    to={`/detail/${encodeURIComponent(anime.url)}`}
+                    className="flex gap-4 group cursor-pointer"
+                  >
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={anime.cover}
+                        alt={anime.judul}
+                        className="w-16 h-20 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-xl"></div>
+                    </div>
+                    <div className="flex flex-col justify-center min-w-0">
+                      <h4 className="text-white text-sm font-semibold line-clamp-2 group-hover:text-indigo-400 transition-colors leading-snug">
+                        {anime.judul}
+                      </h4>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold border border-indigo-500/20">
+                          {anime.type || "TV"}
+                        </span>
+                        <span className="text-[10px] text-gray-500 font-medium">
+                          ⭐ {anime.rating || "N/A"}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
-          </div> */}
+            <Link
+              to="/animeall"
+              className="mt-6 block w-full py-3 rounded-xl border border-white/5 bg-white/5 text-center text-xs font-bold text-gray-400 hover:bg-white/10 hover:text-white transition-all group"
+            >
+              Lihat Semua Anime
+              <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
